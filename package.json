@@ -1,0 +1,95 @@
+{
+  "name": "bubble-save",
+  "version": "0.0.1",
+  "repository": "",
+  "author": "Matthew_Pfister <herrpfister@gmail.com>",
+  "license": "UNLICENSED",
+  "private": false,
+  "devDependencies": {
+    "@babel/core": "^7.12.17",
+    "@babel/preset-env": "^7.12.17",
+    "@babel/preset-react": "^7.12.13",
+    "@babel/preset-typescript": "^7.12.17",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.7.1",
+    "@types/babel__core": "^7",
+    "@types/chance": "^1.1.1",
+    "@types/jest": "^26.0.20",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "babel-jest": "^26.6.3",
+    "babel-loader": "^8.1.0",
+    "chance": "^1.1.7",
+    "copyfiles": "^2.4.1",
+    "eslint": "^7.9.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.23.1",
+    "html-webpack-plugin": "^5.3.1",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "react-test-renderer": "^17.0.1",
+    "source-map-loader": "^2.0.1",
+    "ts-loader": "^8.1.0",
+    "typescript": "^4.0.3",
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "scripts": {
+    "start": "webpack serve --mode=development --config webpack.dev.js",
+    "lint": "eslint ./src",
+    "test": "jest"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-setup.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/examples/",
+      "/dist/"
+    ],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "resetMocks": true,
+    "verbose": true,
+    "coverageDirectory": "<rootDir>/coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
+    },
+    "coverageReporters": [
+      "lcov",
+      "cobertura",
+      "clover",
+      "json"
+    ],
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/coverage/"
+    ]
+  }
+}

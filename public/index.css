@@ -1,0 +1,15 @@
+.indicator {
+  border-radius: 50%;
+  background-color: green;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.online {
+  background-color: green;
+}
+
+.offline {
+  background-color: red;
+}
