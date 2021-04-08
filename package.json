@@ -1,7 +1,7 @@
 {
   "name": "bubble-save",
   "version": "0.0.1",
-  "repository": "",
+  "repository": "git@github.com:HerrPfister/bubble-save.git",
   "author": "Matthew_Pfister <herrpfister@gmail.com>",
   "license": "UNLICENSED",
   "private": false,
@@ -23,7 +23,6 @@
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
     "chance": "^1.1.7",
-    "copyfiles": "^2.4.1",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
