@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode, useState } from 'react';
 
 import { BubbleSaveContext } from './BubbleSaveContext';
 
@@ -6,8 +6,10 @@ export type BubbleSaveProviderProps = {
   children?: ReactNode;
 };
 
-export const BubbleSaveProvider = ({ children }: BubbleSaveProviderProps): ReactElement => (
-  <BubbleSaveContext.Consumer>
-    {(context) => <BubbleSaveContext.Provider value={context}>{children}</BubbleSaveContext.Provider>}
-  </BubbleSaveContext.Consumer>
-);
+export const BubbleSaveProvider = ({ children }: BubbleSaveProviderProps): ReactElement => {
+  const [online, setOnline] = useState(false);
+
+  return (
+    <BubbleSaveContext.Provider value={{ online, updateOnline: setOnline }}>{children}</BubbleSaveContext.Provider>
+  );
+};

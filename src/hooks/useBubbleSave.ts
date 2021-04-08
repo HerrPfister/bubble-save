@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
-import { BubbleSaveContextType } from '../BubbleSaveContext';
+import { BubbleSaveContext } from '../BubbleSaveContext';
 
 const LOCAL_STORAGE_KEY = 'lcl.stg.bbl.k';
 const PING_URL = '/';
@@ -14,32 +14,45 @@ export type useBubbleSaveProps<S, T> = {
   pollingRate?: number;
 };
 
+export type useBubbleSaveContext<S, T> = {
+  bubbleUp: (requestBody?: S) => void;
+  online: boolean;
+  result?: T | null;
+  lastRequestBody?: S | null;
+  error?: string | null;
+};
+
 export type statusCallbackType = (status: boolean) => void;
 
 export function useBubbleSave<S, T>({
   request,
   url = PING_URL,
   pollingRate = POLLING_RATE,
-}: useBubbleSaveProps<S, T>): BubbleSaveContextType<S, T> {
+}: useBubbleSaveProps<S, T>): useBubbleSaveContext<S, T> {
   let requestIntervalId: number;
+
+  const { online, updateOnline } = useContext(BubbleSaveContext);
 
   const [result, setResult] = useState<T>();
   const [error, setError] = useState();
-  const [online, setOnline] = useState(false);
 
   const locallyStoredData = localStorage.getItem(LOCAL_STORAGE_KEY);
   const lastRequestBody = locallyStoredData ? JSON.parse(locallyStoredData) : undefined;
 
-  const isOnline = async (statusCallback?: statusCallbackType) => {
+  const isOnline = async () => {
+    const result = await fetch(url, { method: PING_METHOD });
+
+    return result.status >= 200 && result.status <= 299;
+  };
+
+  const updateOnlineStatus = async (statusCallback?: statusCallbackType) => {
     try {
-      const result = await fetch(url, { method: PING_METHOD });
+      const isSuccessStatus = await isOnline();
 
-      const isSuccessStatus = result.status >= 200 && result.status <= 299;
-
-      setOnline(isSuccessStatus);
+      updateOnline(isSuccessStatus);
       statusCallback?.(isSuccessStatus);
     } catch {
-      setOnline(false);
+      updateOnline(false);
       statusCallback?.(false);
     }
   };
@@ -59,7 +72,7 @@ export function useBubbleSave<S, T>({
   const startPolling = (requestBody?: S) => {
     requestIntervalId = window.setInterval(
       () =>
-        isOnline((status) => {
+        updateOnlineStatus((status) => {
           if (status) makeRequest(requestBody);
         }),
       pollingRate,
@@ -67,7 +80,7 @@ export function useBubbleSave<S, T>({
   };
 
   const bubbleUp = async (requestBody?: S) =>
-    await isOnline(async (status: boolean) => {
+    await updateOnlineStatus(async (status: boolean) => {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(requestBody));
 
       if (status) {
@@ -79,7 +92,7 @@ export function useBubbleSave<S, T>({
     });
 
   useEffect(() => {
-    isOnline();
+    updateOnlineStatus();
   }, []);
 
   return {
