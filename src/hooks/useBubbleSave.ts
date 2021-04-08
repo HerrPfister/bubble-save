@@ -37,7 +37,7 @@ export function useBubbleSave<S, T>({
   const [error, setError] = useState();
 
   const locallyStoredData = localStorage.getItem(LOCAL_STORAGE_KEY);
-  const lastRequestBody = locallyStoredData ? JSON.parse(locallyStoredData) : undefined;
+  const lastRequestBody = locallyStoredData && JSON.parse(locallyStoredData);
 
   const isOnline = async () => {
     const result = await fetch(url, { method: PING_METHOD });
@@ -81,7 +81,7 @@ export function useBubbleSave<S, T>({
 
   const bubbleUp = async (requestBody?: S) =>
     await updateOnlineStatus(async (status: boolean) => {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(requestBody));
+      if (requestBody) localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(requestBody));
 
       if (status) {
         makeRequest(requestBody);
