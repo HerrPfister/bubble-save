@@ -9,7 +9,7 @@ export type BubbleSaveProviderProps = {
 export const BubbleSaveProvider = ({ children }: BubbleSaveProviderProps): ReactElement => {
   const [online, setOnline] = useState(false);
 
-  return (
-    <BubbleSaveContext.Provider value={{ online, updateOnline: setOnline }}>{children}</BubbleSaveContext.Provider>
-  );
+  const context = { online, updateOnline: setOnline };
+
+  return <BubbleSaveContext.Provider value={context}>{children}</BubbleSaveContext.Provider>;
 };
