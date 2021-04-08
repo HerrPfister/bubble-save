@@ -5,6 +5,7 @@ import { BubbleSaveContextType } from '../BubbleSaveContext';
 const LOCAL_STORAGE_KEY = 'lcl.stg.bbl.k';
 const PING_URL = '/';
 const PING_METHOD = 'OPTIONS';
+const POLLING_RATE = 30000;
 
 export type useBubbleSaveProps<S, T> = {
   request: (requestBody?: S) => Promise<T>;
@@ -18,7 +19,7 @@ export type statusCallbackType = (status: boolean) => void;
 export function useBubbleSave<S, T>({
   request,
   url = PING_URL,
-  pollingRate = 30000,
+  pollingRate = POLLING_RATE,
 }: useBubbleSaveProps<S, T>): BubbleSaveContextType<S, T> {
   let requestIntervalId: number;
 
