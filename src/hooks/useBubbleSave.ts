@@ -2,10 +2,11 @@ import { useEffect, useState, useContext } from 'react';
 
 import { BubbleSaveContext } from '../BubbleSaveContext';
 
-const LOCAL_STORAGE_KEY = 'lcl.stg.bbl.k';
 const PING_URL = '/';
 const PING_METHOD = 'OPTIONS';
 const POLLING_RATE = 30000;
+
+export const LOCAL_STORAGE_KEY = 'lcl.stg.bbl.k';
 
 export type useBubbleSaveProps<S, T> = {
   request: (requestBody?: S) => Promise<T>;

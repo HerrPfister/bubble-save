@@ -5,7 +5,7 @@ import fetchMock from 'jest-fetch-mock';
 
 import Chance from 'chance';
 
-import { useBubbleSave } from './useBubbleSave';
+import { useBubbleSave, LOCAL_STORAGE_KEY } from './useBubbleSave';
 import { BubbleSaveProvider } from '../BubbleSaveProvider';
 
 const chance = new Chance();
@@ -119,5 +119,37 @@ describe('useBubbleSave', () => {
     userEvent.click(screen.getByRole('button', { name: 'test' }));
 
     await waitFor(() => expect(screen.getByText(expectedError)).toBeInTheDocument());
+  });
+
+  it('should save data to local storage when making a post request', async () => {
+    fetchMock.mockReject();
+
+    const expectedData = { [chance.word()]: chance.word() };
+
+    const TestComponent = () => {
+      const { bubbleUp } = useBubbleSave<{ [key: string]: string }, string>({
+        request: jest.fn().mockResolvedValue(chance.word()),
+      });
+
+      const handleTest = () => bubbleUp(expectedData);
+
+      return (
+        <button type="button" onClick={handleTest}>
+          test
+        </button>
+      );
+    };
+
+    render(
+      <BubbleSaveProvider>
+        <TestComponent />
+      </BubbleSaveProvider>,
+    );
+
+    userEvent.click(screen.getByRole('button', { name: 'test' }));
+
+    await waitFor(() =>
+      expect(localStorage.setItem).toHaveBeenCalledWith(LOCAL_STORAGE_KEY, JSON.stringify(expectedData)),
+    );
   });
 });

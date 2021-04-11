@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import 'jest-localstorage-mock';
 
 import fetchMock from 'jest-fetch-mock';
 
