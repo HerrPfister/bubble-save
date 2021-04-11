@@ -71,8 +71,8 @@ export function useBubbleSave<S, T>({
 
   const startPolling = (requestBody?: S) => {
     requestIntervalId = window.setInterval(
-      () =>
-        updateOnlineStatus((status) => {
+      async () =>
+        await updateOnlineStatus((status) => {
           if (status) makeRequest(requestBody);
         }),
       pollingRate,
@@ -92,7 +92,9 @@ export function useBubbleSave<S, T>({
     });
 
   useEffect(() => {
-    updateOnlineStatus();
+    (async () => await updateOnlineStatus())();
+
+    return () => clearInterval(requestIntervalId);
   }, []);
 
   return {

@@ -29,6 +29,7 @@
     "eslint-plugin-react": "^7.23.1",
     "html-webpack-plugin": "^5.3.1",
     "jest": "^26.6.3",
+    "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.2.1",
     "react-test-renderer": "^17.0.1",
     "source-map-loader": "^2.0.1",
@@ -62,13 +63,14 @@
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/examples/",
+      "/src/examples/",
       "/dist/"
     ],
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
+    "automock": false,
     "resetMocks": true,
     "verbose": true,
     "coverageDirectory": "<rootDir>/coverage",
@@ -88,7 +90,8 @@
     ],
     "collectCoverage": true,
     "coveragePathIgnorePatterns": [
-      "<rootDir>/coverage/"
+      "<rootDir>/coverage/",
+      "<rootDir>/src/examples/"
     ]
   }
 }
