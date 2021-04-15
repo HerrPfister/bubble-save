@@ -11,7 +11,6 @@ export const LOCAL_STORAGE_KEY = 'lcl.stg.bbl.k';
 export type useBubbleSaveProps<S, T> = {
   request: (requestBody?: S) => Promise<T>;
   url?: string;
-  useAnyConnectionType?: boolean;
   pollingRate?: number;
 };
 
